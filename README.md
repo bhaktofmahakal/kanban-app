@@ -4,10 +4,9 @@ A full-stack Kanban board built with React and Node.js/Express. Organize tasks i
 
 ## Live Demo
 
-- **Frontend**: [Vercel Link](https://qnaappaijsbxjsbx.vercel.app)
-- **Backend API**: [Render Link](https://kanban-backend.onrender.com/tasks)
-
-> Set `VITE_API_URL` in Vercel to your Render backend URL after deployment.
+- **Frontend**: [Vercel Link](https://kanban-frontend-three-eta.vercel.app)
+- **Backend API**: [Render Link](https://kanban-app-t5cy.onrender.com/tasks)
+- **Health Check**: [Health](https://kanban-app-t5cy.onrender.com/health)
 
 ## Tech Stack
 
