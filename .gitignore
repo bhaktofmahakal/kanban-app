@@ -13,4 +13,6 @@ Thumbs.db
 *.swo
 *~
 .playwright-mcp/
-skills-lock.json
+.vercel/
+coverage/
+.nyc_output/
