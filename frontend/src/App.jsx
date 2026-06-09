@@ -43,7 +43,9 @@ export default function App() {
 
       {error ? (
         <div className="error-banner" role="alert">
-          {error}
+          {error.includes("Failed") || error.includes("fetch")
+            ? "Server is waking up, please wait a moment..."
+            : error}
         </div>
       ) : null}
 

@@ -20,16 +20,23 @@ async function parseResponse(response) {
   return data;
 }
 
-async function request(path, options = {}) {
-  const response = await fetch(`${apiUrl}${path}`, {
-    ...options,
-    headers: {
-      ...(options.body ? { "Content-Type": "application/json" } : {}),
-      ...options.headers,
-    },
-  });
+async function request(path, options = {}, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(`${apiUrl}${path}`, {
+        ...options,
+        headers: {
+          ...(options.body ? { "Content-Type": "application/json" } : {}),
+          ...options.headers,
+        },
+      });
 
-  return parseResponse(response);
+      return await parseResponse(response);
+    } catch (error) {
+      if (attempt === retries) throw error;
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
+    }
+  }
 }
 
 export function getTasks() {
