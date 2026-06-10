@@ -9,6 +9,7 @@
   --accent: #1f7a5a;
   --accent-strong: #165f45;
   --danger: #b23b1f;
+  --danger-hover: #991f12;
   --shadow: 0 16px 40px rgba(23, 25, 28, 0.08);
 }
 
@@ -92,7 +93,7 @@ h1 {
   padding: 20px;
   background: color-mix(in srgb, var(--surface) 94%, white);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
 }
 
@@ -133,9 +134,10 @@ h1 {
   min-height: 42px;
   padding: 0 12px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--surface);
   color: var(--text);
+  transition: border-color 0.15s;
 }
 
 .add-task input:focus,
@@ -144,19 +146,32 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+.add-task input:focus {
+  border-color: var(--accent);
+}
+
 .add-task button,
 .button-primary {
-  min-height: 38px;
-  padding: 0 14px;
-  border-radius: 6px;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
   background: var(--accent);
   color: #ffffff;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition:
+    background 0.15s,
+    transform 0.1s;
 }
 
 .add-task button:hover:not(:disabled),
 .button-primary:hover:not(:disabled) {
   background: var(--accent-strong);
+}
+
+.add-task button:active:not(:disabled),
+.button-primary:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .task-list {
@@ -166,18 +181,27 @@ button:focus-visible {
 
 .task-card {
   display: grid;
-  gap: 16px;
-  padding: 16px;
-  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-  border-radius: 8px;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 10px;
   background: var(--surface);
-  box-shadow: 0 10px 24px rgba(33, 30, 25, 0.06);
+  box-shadow: 0 2px 8px rgba(33, 30, 25, 0.04);
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
+}
+
+.task-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  box-shadow: 0 4px 16px rgba(33, 30, 25, 0.08);
 }
 
 .task-card h3 {
   margin: 0;
   font-size: 1rem;
-  line-height: 1.35;
+  line-height: 1.4;
+  font-weight: 600;
 }
 
 .task-actions {
@@ -187,17 +211,43 @@ button:focus-visible {
 }
 
 .button-ghost {
-  min-height: 38px;
-  padding: 0 12px;
-  border: 1px solid color-mix(in srgb, var(--danger) 40%, var(--border));
-  border-radius: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, var(--border));
+  border-radius: 8px;
   background: transparent;
   color: var(--danger);
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .button-ghost:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  background: color-mix(in srgb, var(--danger) 8%, transparent);
+  border-color: var(--danger);
+}
+
+.button-danger {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: var(--danger);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.button-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.button-danger:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .empty-state {
@@ -213,6 +263,39 @@ button:focus-visible {
   background: color-mix(in srgb, var(--danger) 9%, var(--surface));
   color: var(--danger);
   font-weight: 700;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.modal-message {
+  margin: 0 0 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .skeleton-column {
@@ -304,6 +387,7 @@ button:focus-visible {
     --accent: #74c69d;
     --accent-strong: #95d5b2;
     --danger: #ffb199;
+    --danger-hover: #ff9980;
     --shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
   }
 
@@ -312,7 +396,15 @@ button:focus-visible {
     color: #102016;
   }
 
+  .button-danger {
+    color: #1a0a04;
+  }
+
   .task-card {
     box-shadow: none;
+  }
+
+  .modal {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   }
 }

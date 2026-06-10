@@ -1,10 +1,19 @@
+import { useState } from "react";
+import ConfirmDialog from "./ConfirmDialog.jsx";
+
 export default function TaskCard({
   task,
   onToggleStatus,
   onDeleteTask,
   disabled,
 }) {
+  const [confirming, setConfirming] = useState(false);
   const toggleLabel = task.status === "todo" ? "Mark Done" : "Move Back";
+
+  function handleConfirm() {
+    setConfirming(false);
+    onDeleteTask(task.id);
+  }
 
   return (
     <article className="task-card" role="listitem">
@@ -21,12 +30,20 @@ export default function TaskCard({
         <button
           className="button-ghost"
           type="button"
-          onClick={() => onDeleteTask(task.id)}
+          onClick={() => setConfirming(true)}
           disabled={disabled}
         >
           Delete
         </button>
       </div>
+
+      {confirming ? (
+        <ConfirmDialog
+          message="Are you sure you want to delete this task?"
+          onConfirm={handleConfirm}
+          onCancel={() => setConfirming(false)}
+        />
+      ) : null}
     </article>
   );
 }
