@@ -72,6 +72,3 @@ kanban-app/
 └── package.json            # Root scripts
 ```
 
-## License
-
-MIT
